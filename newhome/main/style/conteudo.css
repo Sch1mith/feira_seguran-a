@@ -3,35 +3,26 @@
 }
 
 .nav .nav-link {
-    color: #FFD09B;
+    color: #FFF7D1;
 }
 
 .nav .nav-link.active {
-    color: #FFB0B0 !important;
-    background-color: #40534C;
-    border-color: #FFECC8;
+    color: #FFF7D1 !important;
+    background-color: #1A3636 !important;
+    border-color: #4F6F52 !important;
 }
 
 .nav .nav-link:hover {
-    color: #FFF7D1;
-    border-color: #FFECC8;
+    color: #FEFF9F !important;
+    background-color: #322C2B;
+    box-shadow: 0 0 5px #FFD09B !important;
+    border-color: #4F6F52 !important;
 }
 
 .carrosel {
-    height: 600px;
-    background-color: #FFFDF1;
+    height: 60vh !important;
+    background-color: #FFECC8 !important;
     border: #AF8260, solid, 3px;
-}
-
-.row-carosel {
-    margin-top: 3vh !important;
-    padding: 20px;
-}
-
-.coluna {
-    margin-top: 28px;
-    margin-right: 50px;
-    margin-left: 50px;
 }
 
 .custom-flex-center {
@@ -51,6 +42,59 @@
     font-weight: 500 !important;
     font-style: normal;
     color: #1A3636 !important;
+}
+
+.custom-flex-left {
+    display: flex;
+    justify-content: right !important;
+    align-items: right !important;
+    height: 20%;
+}
+
+.carrosel-img {
+    position: relative;
+    height: 30vh;
+    width: 50vh;
+    margin-bottom: 5%;
+    margin-top: 1%;
+    margin-left: 40%;
+    border: #322C2B, solid, 2px;
+}
+
+.custom-flex-bottom {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    height: 10%;
+    position: absolute;
+    top: 60px !important;
+    left: 22px
+}
+
+.carrosel-p {
+    font-family: "Quicksand", Arial;
+    font-optical-sizing: auto;
+    margin-top: 20px;
+    font-weight: 500 !important;
+    font-style: normal;
+    color: #1A3636 !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    border: #AF8260, solid, 2px;
+    background-color: #1a3636;
+}
+
+.row-carosel {
+    margin-top: 3vh !important;
+    padding: 20px;
+}
+
+.coluna {
+    margin-top: 28px;
+    margin-right: 50px;
+    margin-left: 50px;
 }
 
 .row-card {
@@ -74,13 +118,6 @@
     font-weight: 400 !important;
     color: #FFD09B !important;
     text-decoration-line: underline;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    border: #AF8260, solid, 2px;
-    background-color: #1a3636;
-    /* Change background color */
 }
 
 .img-pages {
@@ -153,21 +190,15 @@
 
 ol {
     list-style-type: none;
-    /* Remove default numbering */
     counter-reset: list-counter;
-    /* Reset counter */
 }
 
 ol li {
     counter-increment: list-counter;
-    /* Increment counter */
     font-family: Arial, sans-serif;
-    /* Change font for list items */
 }
 
 ol li::before {
     content: counter(list-counter) ". ";
-    /* Add counter before list item */
     font-family: 'Courier New', monospace;
-    /* Change font for numbers */
 }
