@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
         #map {
             height: 100%;
         }
-        html, body {
+
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -14,31 +17,56 @@
     <title>Geolocation</title>
     <script>
         async function initMap() {
-            // Localização inicial
             const local = { lat: -23.538076383597282, lng: -46.46189247036771 };
 
-            // Importando as bibliotecas necessárias
             const { Map } = await google.maps.importLibrary("maps");
             const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-            // Inicializando o mapa
             map = new Map(document.getElementById("map"), {
                 center: local,
-                zoom: 13,
-                disableDefaultUI: true,  // Desabilita a UI padrão do mapa
+                zoom: 14,
+                mapId: 'd98a6df342c18eb2',
+                disableDefaultUI: true,
+                zoomControl: true,
+                styles: [
+                    {
+                        "featureType": "poi",
+
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    },
+                    {
+                        "elementType": "labels",
+                        "featureType": "poi.business",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.business",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    }
+                ],
             });
 
-            // Criando o marcador avançado
-            const marker = new AdvancedMarkerElement({
-                map: map,
-                position: local,
-                title: "Uluru",
-            });
-
-            // Inicializando o InfoWindow
             infoWindow = new google.maps.InfoWindow();
 
-            // Tentando a geolocalização HTML5
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -53,9 +81,28 @@
                     }
                 );
             } else {
-                // Caso o navegador não suporte geolocalização
                 handleLocationError(false, infoWindow, map.getCenter());
             }
+
+            // Array of marker data: each entry contains the latitude, longitude, and title
+            var markers = [
+                { lat: -23.54982324201291, lng: -46.525064535582544, title: 'aricanduva astarte' },
+                { lat: -23.588202270006775, lng: -46.50891444666432, title: 'vila nova york' },
+                { lat: -23.536933500938847, lng: -46.54732720328706, title: 'viaduto eng.° Alberto Badra' },
+                { lat: -23.595336278464497, lng: -46.746721567449015, title: 'jardim maria do carmo' },
+                { lat: -23.59933708473178, lng: -46.72142897815588, title: 'giovani gronchi' },
+                { lat: -23.5876375495963, lng: -46.75457031516011, title: 'jardim jaqueline' },
+            ];
+
+            // Loop through the array of marker data and create a marker for each
+            markers.forEach(function (markerData) {
+                var marker = new google.maps.Marker({
+                    position: { lat: markerData.lat, lng: markerData.lng },
+                    map: map,  // Set the map to display the marker
+                    title: markerData.title  // Optional: Display a title when the marker is hovered over
+                });
+            });
+
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -68,12 +115,15 @@
             infoWindow.open(map);
         }
 
-        window.initMap = initMap;  // Garantindo que a função será chamada como callback
+        window.initMap = initMap;
     </script>
 </head>
+
 <body>
     <div id="map" style="height: 100%;"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-p8W5ZPB0hzW_TDhslAxM3YJTjTCPh6U&callback=initMap&libraries=geometry,places,marker"
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-p8W5ZPB0hzW_TDhslAxM3YJTjTCPh6U&callback=initMap&libraries=geometry,places,marker"
         async defer></script>
 </body>
+
 </html>
