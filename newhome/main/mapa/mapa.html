@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <title>Geolocation</title>
+    <script>
+        async function initMap() {
+            const local = { lat: -23.538076383597282, lng: -46.46189247036771 };
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+            map = new Map(document.getElementById("map"), {
+                center: local,
+                zoom: 15,
+                mapId: 'd98a6df342c18eb2',
+                disableDefaultUI: true,
+                zoomControl: true,
+            });
+
+            infoWindow = new google.maps.InfoWindow();
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        map.setCenter(pos);
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+            const customIcon = {
+                url: "map_marker.png",
+                scaledSize: new google.maps.Size(50, 50),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(25, 50),
+            };
+
+            var markers = [
+                { lat: -23.54982324201291, lng: -46.525064535582544, title: 'aricanduva astarte' },
+                { lat: -23.588202270006775, lng: -46.50891444666432, title: 'vila nova york' },
+                { lat: -23.536933500938847, lng: -46.54732720328706, title: 'viaduto eng.° Alberto Badra' },
+                { lat: -23.595336278464497, lng: -46.746721567449015, title: 'jardim maria do carmo' },
+                { lat: -23.59933708473178, lng: -46.72142897815588, title: 'giovani gronchi' },
+                { lat: -23.5876375495963, lng: -46.75457031516011, title: 'jardim jaqueline' },
+                { lat: -23.575190447869854, lng: -46.7652718295265, title: 'politécnica' },
+                { lat: -23.633903872128812, lng: -46.758006055669306, title: 'olinda' },
+                { lat: -23.663817270534135, lng: -46.7768412096711, title: 'santos dias' },
+                { lat: -23.671847400726445, lng: -46.792269154125286, title: 'parque fernanda' },
+                { lat: -23.638087235015828, lng: -46.74160616625145, title: 'vila das belezas' },
+                { lat: -23.62296949163627, lng: -46.725190233973386, title: 'paraisópolis' },
+                { lat: -23.66194264912046, lng: -46.72253234746301, title: 'cidade saudavel' },
+                { lat: -23.491604620422823, lng: -46.65578802916724, title: 'parque peruche' },
+                { lat: -23.47202987539443, lng: -46.66987454747133, title: 'vila nova cachoeirinha' },
+                { lat: -23.49373617439376, lng: -46.67151110328913, title: 'vila santa maria' },
+                { lat: -23.454648073961202, lng: -46.6595213186357, title: 'jardim antártica' },
+                { lat: -23.695239091806464, lng: -46.65165010698778, title: 'ademar cupecê' },
+                { lat: -23.57358555752143, lng: -46.40015877711881, title: 'inacio monteiro' },
+                { lat: -23.592967758674053, lng: -46.41552425488143, title: 'nascer do sol' },
+                { lat: -23.58603846281423, lng: -46.39648454746625, title: 'barro branco' },
+                { lat: -23.50317048776799, lng: -46.48442473212468, title: 'boturussu' },
+                { lat: -23.523114755394708, lng: -46.48286428246718, title: 'jardim são nicolau' },
+                { lat: -23.46972260147551, lng: -46.67497664932527, title: 'vila rica' },
+                { lat: -23.50557903045723, lng: -46.70446334746972, title: 'freguesia do ó' },
+                { lat: -23.48597333967452, lng: -46.69529748942138, title: 'bandeirantes' },
+                { lat: -23.55507461639305, lng: -46.413001205140176, title: 'guaiaponto' },
+                { lat: -23.530495064342695, lng: -46.406099132123536, title: 'lajeado' },
+                { lat: -23.56529170138255, lng: -46.3983840763035, title: 'jardim sao paulo' },
+                { lat: -23.568939169920576, lng: -46.608375089794464, title: 'tereza cristina' },
+                { lat: -23.62368727346548, lng: -46.60563700513712, title: 'vila das mercês' },
+                { lat: -23.600023700773875, lng: -46.59691668237776, title: 'heliópolis' },
+                { lat: -23.599603310298875, lng: -46.62329498979311, title: 'santa cruz' },
+                { lat: -23.50821253339896, lng: -46.416811754579506, title: 'mãe preta' },
+                { lat: -23.501023206295535, lng: -46.38938444746997, title: 'pesqueiro' },
+                { lat: -23.51421674464596, lng: -46.42129053583215, title: 'flamingo' },
+                { lat: -23.497349340855838, lng: -46.37089356713524, title: 'moreira' },
+                { lat: -23.520516329875175, lng: -46.42897610514164, title: 'vuruça' },
+                { lat: -23.56214192345951, lng: -46.49933106281246, title: 'cidade líder' },
+                { lat: -23.598915610324454, lng: -46.53447863397457, title: 'São Lucas' },
+                { lat: -23.5820846396294, lng: -46.5713374657739, title: 'Anhaia Mello' },
+                { lat: -23.592701537868034, lng: -46.63497287815611, title: 'Vila Mariana' },
+                { lat: -23.594324493547887, lng: -46.622208047465925, title: 'Saioá' },
+                { lat: -23.611560849889344, lng: -46.644525691646585, title: 'Mirandópolis' },
+                { lat: -23.485521778201115, lng: -46.56529320514317, title: 'Vila Sabrina' },
+                { lat: -23.516728761940627, lng: -46.58394190514184, title: 'Vila Maria' },
+                { lat: -23.516948550797142, lng: -46.60042900514184, title: 'Vila Guilherme' },
+                { lat: -23.549460608484043, lng: -46.628390214469775, title: 'Cambuci' },
+                { lat: -23.524516408351626, lng: -46.642416730986504, title: 'Barra Funda' },
+                { lat: -23.521116717755795, lng: -46.62777490514175, title: 'Armênia' },
+                { lat: -23.555999600613532, lng: -46.6370930609588, title: 'Liberdade' },
+                { lat: -23.562055903723333, lng: -46.64587737922207, title: 'Glicério' },
+                { lat: -23.605383718839956, lng: -46.4969079628104, title: 'Teotônio Vilela' },
+                { lat: -23.62330132442862, lng: -46.509238565788635, title: 'Sitio Oratório' },
+                { lat: -23.50649631532205, lng: -46.46222602144665, title: 'Pedro Nunes' },
+                { lat: -23.509906130003902, lng: -46.43280965567485, title: 'Itaqueruna' },
+                { lat: -23.490439881184873, lng: -46.39430931686644, title: 'Carlito Maia' },
+                { lat: -23.513893657927976, lng: -46.45669879192444, title: 'Imperador' },
+                { lat: -23.605373868961745, lng: -46.45181757588272, title: 'Iguatemi' },
+                { lat: -23.57912380562445, lng: -46.495463808015685, title: 'São Mateus' },
+                { lat: -23.628490016931035, lng: -46.446579993570495, title: 'Lima Bonfante' },
+                { lat: -23.627277710551844, lng: -46.46216452190331, title: 'Cipoaba' },
+                { lat: -23.62819639316677, lng: -46.68547147564341, title: 'Vicente Rao' },
+                { lat: -23.635533863991803, lng: -46.7134999301457, title: 'Alceu Maynard de Araújo' },
+                { lat: -23.467043315809935, lng: -46.610085320489226, title: 'Tucuruvi' },
+                { lat: -23.511228877174055, lng: -46.621985621076774, title: 'Santana' },
+                { lat: -23.44230888967541, lng: -46.749347096632725, title: 'Alexios Jafet' },
+                { lat: -23.43950566579221, lng: -46.74029391755697, title: 'Voith' },
+                { lat: -23.477494838461723, lng: -46.718232714789764, title: 'Vigário Godói' },
+                { lat: -23.492231799704847, lng: -46.72193975851571, title: 'Cônego José Salomon' },
+                { lat: -23.55700466642433, lng: -46.710360038124506, title: 'Alto de Pinheiros' },
+                { lat: -23.558276828656783, lng: -46.68751094746741, title: 'Vila Madalena' },
+                { lat: -23.597955308180648, lng: -46.69131639100398, title: 'Pinheiros' },
+                { lat: -23.432901574786523, lng: -46.792104531659966, title: 'Jardim Santa Fé' },
+                { lat: -23.409106020700786, lng: -46.750718573481606, title: 'Recanto dos Humildes' },
+                { lat: -23.550492415482317, lng: -46.522360747467815, title: 'Vila Dalila' },
+                { lat: -23.548984690258163, lng: -46.48323286281301, title: 'COHAB' },
+                { lat: -23.539115082144328, lng: -46.515736533977076, title: 'Vila Talarico' },
+                { lat: -23.53915263796822, lng: -46.50503610514081, title: 'Vila Matilde' },
+                { lat: -23.550590804449698, lng: -46.49493736281299, title: 'Gamelinha' },
+                { lat: -23.534054117747683, lng: -46.49121374330906, title: 'Franquinho' },
+                { lat: -23.50210359573869, lng: -46.52783104139423, title: 'Cangaíba' },
+                { lat: -23.507866592382477, lng: -46.53633693913363, title: 'Tiquatira' },
+                { lat: -23.531274758921565, lng: -46.525443233977434, title: 'Penha I' },
+                { lat: -23.5322801502732, lng: -46.55149612259726, title: 'Vila Luisa' },
+                { lat: -23.54310096421947, lng: -46.593756047468126, title: 'Belém' },
+                { lat: -23.546318187514164, lng: -46.607275505852144, title: 'Moóca' },
+                { lat: -23.525003965563933, lng: -46.61033586861054, title: 'Pari' },
+                { lat: -23.538981932966625, lng: -46.62215306095954, title: 'Mendes Caldeira' },
+                { lat: -23.55300359617552, lng: -46.62474533802561, title: 'Brás' },
+                { lat: -23.529894001077015, lng: -46.583089405141294, title: 'Tatuapé' },
+                { lat: -23.504007595670824, lng: -46.50942163040909, title: 'Bresser' },
+                { lat: -23.669552358266827, lng: -46.73614240513514, title: 'Piraporinha' },
+                { lat: -23.5162936501126, lng: -46.74194058979687, title: 'Vila Jaguara' },
+                { lat: -23.52416231493522, lng: -46.67047976736861, title: 'Viad. Antártica' },
+                { lat: -23.632278662411295, lng: -46.630554805136775, title: 'Imigrantes' },
+                { lat: -23.652356559128418, lng: -46.649867037322245, title: 'Jabaquara' },
+                { lat: -23.548624695999575, lng: -46.43634450514051, title: 'Cohab 2' },
+                { lat: -23.52081641681119, lng: -46.46356171863287, title: 'Parque Guarani' },
+                { lat: -23.578912771301695, lng: -46.48612630449288, title: 'Parque do Carmo' },
+                { lat: -23.558986998484414, lng: -46.48865114746749, title: 'Osvaldo Valle Cordeiro' },
+            ];
+
+            markers.forEach(function (markerData) {
+                var marker = new google.maps.Marker({
+                    icon: customIcon,
+                    position: { lat: markerData.lat, lng: markerData.lng },
+                    map: map, 
+                    title: markerData.title
+                });
+            });
+
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+
+        window.initMap = initMap;
+    </script>
+</head>
+
+<body>
+    <div id="map" style="height: 100%;"></div>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-p8W5ZPB0hzW_TDhslAxM3YJTjTCPh6U&callback=initMap&libraries=geometry,places,marker"
+        async defer></script>
+</body>
+
+</html>
